@@ -1,0 +1,49 @@
+@color-50: #f6fbfe;
+@color-100: #e6f4fc;
+@color-200: #bae1f7;
+@color-300: #8ccef2;
+@color-400: #5ebaed;
+@color-500: #30a6e8;
+@color-600: #178dcf;
+@color-700: #126ea1;
+@color-800: #0d4e73;
+@color-900: #082f45;
+
+html {
+  font-family: "Noto Sans";
+  font-size: 16px !important;
+}
+
+.x-side-panel {
+  background: @color-50;
+}
+
+.x-tree-view a {
+  text-decoration: none;
+  color: @color-700;
+}
+
+.x-tree-view a:hover {
+  color: red;
+}
+
+.x-tree-view ul {
+  padding: 0;
+
+  i,
+  .x-tree-view-collapsed-count {
+    margin-left: 0.4rem;
+  }
+}
+
+.x-tree-view > ul > li > a {
+  color: @color-800;
+}
+
+.x-tree-view > ul > li > ul > li > a {
+  font-weight: bold;
+}
+
+.x-tree-view li > div {
+  margin-bottom: 1rem;
+}
