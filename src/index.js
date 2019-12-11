@@ -1,12 +1,12 @@
-import "./reset.less";
-import "./styles.less";
-import "./theme.less";
-import storeHierarchyData from "./data/store-hierarchy";
-import { real } from "./data/store-hierarchy";
-import { render, attachHandlers } from "./lib/render";
-import toTreeData from "./lib/to-tree-data";
-import TreeView from "./components/TreeView";
-import reduceTree from "./lib/reduce-tree";
+import './reset.less'
+import './styles.less'
+import './theme.less'
+import storeHierarchyData from './data/store-hierarchy'
+import { real } from './data/store-hierarchy'
+import { render, attachHandlers } from './lib/render'
+import toTreeData from './lib/to-tree-data'
+import TreeView from './components/TreeView'
+import reduceTree from './lib/reduce-tree'
 
 /*--------------================----------------*/
 // Data Lib
@@ -30,48 +30,48 @@ import reduceTree from "./lib/reduce-tree";
 
 const getDescendantCount = reduceTree((acc, curr) =>
   !curr.children || !curr.children.length ? (acc++, acc) : acc
-)("children")(0);
+)('children')(0)
 
 function Icon({ cls }) {
-  const i = document.createElement("i");
+  const i = document.createElement('i')
 
-  i.className = cls;
+  i.className = cls
 
-  return i;
+  return i
 }
 
-function _renderNode({ container, data, icon, isLeaf, isCollapsed }, anchorEl) {
-  const innerContainer = document.createElement("div");
+function _renderNode({ data, icon, isLeaf, isCollapsed }, anchorEl) {
+  const innerContainer = document.createElement('div')
 
-  anchorEl.innerHTML = "";
-  anchorEl.textContent = data.name;
+  anchorEl.innerHTML = ''
+  anchorEl.textContent = data.name
   anchorEl.appendChild(
-    Icon({ cls: isLeaf ? "fas fa-map-marker-alt" : "far fa-map" })
-  );
+    Icon({ cls: isLeaf ? 'fas fa-map-marker-alt' : 'far fa-map' })
+  )
 
-  innerContainer.appendChild(anchorEl);
+  innerContainer.appendChild(anchorEl)
 
   if (!isLeaf) {
-    innerContainer.appendChild(icon);
+    innerContainer.appendChild(icon)
 
     if (isCollapsed) {
-      const span = document.createElement("span");
-      span.classList.add("x-tree-view-collapsed-count");
-      span.textContent = `(${getDescendantCount([data])})`;
+      const span = document.createElement('span')
+      span.classList.add('x-tree-view-collapsed-count')
+      span.textContent = `(${getDescendantCount([data])})`
 
-      innerContainer.appendChild(span);
+      innerContainer.appendChild(span)
     }
   }
 
-  console.log("rendering node", innerContainer);
+  console.log('rendering node', innerContainer)
 
-  return innerContainer;
+  return innerContainer
 }
 
 const treeView = TreeView({
   data: toTreeData({
     data: storeHierarchyData,
-    itemsProp: "children"
+    itemsProp: 'children'
   }),
   renderNode: ({ el, ...props }) => _renderNode(props, el)
   // onLeafHover({ event, data }) {
@@ -108,11 +108,11 @@ const treeView = TreeView({
   //     node.children[0]
   //   );
   // }
-});
+})
 
-const container = document.createElement("div");
+const container = document.createElement('div')
 
-container.classList.add("x-side-panel");
-container.appendChild(treeView);
+container.classList.add('x-side-panel')
+container.appendChild(treeView)
 
-render(container, "app");
+render(container, 'app')
