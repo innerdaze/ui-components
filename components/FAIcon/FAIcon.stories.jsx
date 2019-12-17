@@ -1,5 +1,6 @@
-import jsxElem from 'jsx-no-react'
-import FAIcon, { TYPES } from './FAIcon'
+// import { h } from 'preact'
+import React from 'react'
+import FAIcon, { STYLES } from './FAIcon'
 
 export default {
   title: 'FAIcon',
@@ -8,12 +9,14 @@ export default {
 
 export const solid = () => <FAIcon type="grin-hearts" />
 export const regular = () => (
-  <FAIcon type="grin-hearts" iconStyle={TYPES.REGULAR} />
+  <FAIcon type="grin-hearts" iconStyle={STYLES.REGULAR} />
 )
-export const light = () => <FAIcon type="grin-hearts" iconStyle={TYPES.LIGHT} />
+// export const light = () => (
+//   <FAIcon type="grin-hearts" iconStyle={STYLES.LIGHT} />
+// )
 export const brands = () => (
-  <FAIcon type="grin-hearts" iconStyle={TYPES.BRANDS} />
+  <FAIcon type="grin-hearts" iconStyle={STYLES.BRANDS} />
 )
-export const style = () => (
-  <FAIcon type="grin-hearts" style={{ color: 'red', fontSize: '2em' }} />
-)
+// export const style = () => (
+//   <FAIcon type="grin-hearts" style={{ color: 'red', fontSize: '2em' }} />
+// )

@@ -1,21 +1,28 @@
-import jsxElem from 'jsx-no-react'
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+// import { h } from 'preact'
+import React from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+// import { FontAwesomeIcon } from '@aduh95/preact-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export const TYPES = {
+library.add(fas, fab, far)
+
+export const STYLES = {
   SOLID: 'SOLID',
   REGULAR: 'REGULAR',
-  LIGHT: 'LIGHT',
+  // LIGHT: 'LIGHT',
   BRAND: 'BRAND'
 }
 
 const styleMap = {
   SOLID: 'fas',
   REGULAR: 'far',
-  LIGHT: 'fal',
+  // LIGHT: 'fal',
   BRANDS: 'fab'
 }
 
-export default function FAIcon({ iconStyle = TYPES.SOLID, type }) {
-  return <i class={`${styleMap[iconStyle]} fa-${type}`}></i>
+export default function FAIcon({ iconStyle = STYLES.SOLID, type }) {
+  return <FontAwesomeIcon icon={[styleMap[iconStyle], type]} />
 }

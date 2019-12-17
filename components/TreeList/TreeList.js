@@ -1,7 +1,15 @@
-import jsxElem from 'jsx-no-react'
+// import { h } from 'preact'
+import React from 'react'
 import TreeNode from '@components/TreeNode'
 
-const TreeList = ({ data, collapsible, renderNode, ...handlers }) => {
+const TreeList = ({
+  data,
+  collapsible,
+  renderNode,
+  textProp = 'text',
+  childrenProp = 'children',
+  ...handlers
+}) => {
   return (
     <ul>
       {data.reduce((acc, props) => {
@@ -9,23 +17,29 @@ const TreeList = ({ data, collapsible, renderNode, ...handlers }) => {
           ...handlers,
           collapsible,
           renderNode,
-          name: props.name,
-          data: props
+          text: props[textProp],
+          nodeData: props
         }
 
-        if (props.children && props.children.length) {
+        const children = props[childrenProp]
+
+        if (children && children.length) {
           nodeProps.children = (
             <TreeList
               {...handlers}
-              collapsible
-              renderNode
-              data={props.children}
+              textProp={textProp}
+              childrenProp={childrenProp}
+              collapsible={collapsible}
+              renderNode={renderNode}
+              data={children}
             />
           )
         }
 
-        return <TreeNode {...nodeProps} />
-      })}
+        acc.push(<TreeNode {...nodeProps} />)
+
+        return acc
+      }, [])}
     </ul>
   )
 }

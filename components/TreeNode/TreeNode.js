@@ -1,111 +1,108 @@
-import { attachHandlers } from '@lib/render'
+// import { h, Fragment } from 'preact'
+// import { useState } from 'preact/hooks'
+import React, { useState, Fragment } from 'react'
+import { classes } from '@lib/render'
 
-function defaultRenderNode({ data, icon, el }) {
-  el.textContent = data.name
-  icon && el.appendChild(icon)
-  return el
+import FAIcon from '@components/FAIcon'
+
+function defaultRenderNode({ text, icon, isLeaf, nodeData }) {
+  return (
+    <Fragment>
+      <span>{text}</span>
+      {!isLeaf && icon ? icon : null}
+    </Fragment>
+  )
 }
+
+const VisibilityToggle = ({
+  isVisible,
+  handleClick,
+  visibleCls = 'active',
+  visibleIcon = <FAIcon type="chevron-down" />,
+  hiddenIcon = <FAIcon type="chevron-up" />
+}) => (
+  <a class={isVisible ? visibleCls : ''} href="#" onClick={handleClick}>
+    {isVisible ? visibleIcon : hiddenIcon}
+  </a>
+)
 
 const TreeNode = ({
   children,
-  data,
+  nodeData,
+  text,
   collapsible,
   renderNode = defaultRenderNode,
-  hoverCls = 'hover',
-  collapsedIconCls = 'fas fa-chevron-up',
-  expandedIconCls = 'fas fa-chevron-down',
-  onClick,
-  // onNodeClick = Function.prototype,
-  // onNodeHover = Function.prototype,
-  // onLeafClick = Function.prototype,
-  // onLeafHover = Function.prototype,
-  onCollapse = Function.prototype,
-  onExpand = Function.prototype
+  collapsedIcon = <FAIcon type="chevron-up" />,
+  expandedIcon = <FAIcon type="chevron-down" />,
+  handleClick,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleCollapse = Function.prototype,
+  handleExpand = Function.prototype
 }) => {
-  const el = document.createElement('li')
-  const anchorEl = document.createElement('a')
-  const spanEl = document.createElement('span')
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  const anchorEl = ({ children }) => (
+    <a
+      href="#"
+      onClick={e => {
+        e.preventDefault()
+        handleClick(e, { data, isLeaf: Boolean(children) })
+      }}
+      onMouseEnter={e => {
+        handleMouseEnter({ event: e, data, isLeaf: Boolean(children) })
+      }}
+      onMouseLeave={e => {
+        handleMouseLeave({ event: e, data, isLeaf: Boolean(children) })
+      }}
+    >
+      {children}
+    </a>
+  )
+  // const spanEl = ({ children }) => <span>{children}</span>
+  const TreeNodeContent = handleClick ? anchorEl : Fragment
 
   let iconAnchor
 
   if (collapsible) {
-    iconAnchor = document.createElement('a')
-    iconAnchor.setAttribute('href', '#')
+    const handleNodeCollapseIconClick = function({ event }) {
+      event.preventDefault()
 
-    const icon = document.createElement('i')
-    icon.className = el.classList.contains('active')
-      ? expandedIconCls
-      : collapsedIconCls
+      setIsExpanded(!isExpanded)
 
-    iconAnchor.appendChild(icon)
+      const _fn = !isExpanded ? handleExpand : handleCollapse
 
-    attachHandlers(
-      { click: e => handleNodeCollapseIconClick({ event: e, data }) },
-      iconAnchor
-    )
-
-    const handleNodeCollapseIconClick = function({ event, data }) {
-      el.classList.toggle('active')
-
-      const isCollapsed = !el.classList.contains('active')
-
-      if (isCollapsed) {
-        iconAnchor.className = collapsedIconCls
-      } else {
-        iconAnchor.className = expandedIconCls
-      }
-
-      el.replaceChild(
-        renderNode({
-          data,
-          icon: iconAnchor,
-          isLeaf: !children,
-          isCollapsed,
-          el: anchorEl
-        }),
-        el.children[0]
-      )
-
-      const _fn = isCollapsed ? onCollapse : onExpand
-
-      _fn({ event, data, node: el })
+      _fn({ event, data: nodeData })
     }
+
+    iconAnchor = (
+      <VisibilityToggle
+        visibleIcon={expandedIcon}
+        hiddenIcon={collapsedIcon}
+        isVisible={isExpanded}
+        handleClick={e => handleNodeCollapseIconClick({ event: e })}
+      />
+    )
   }
 
-  const handleTreeNodeMouseEnter = function() {
-    el.classList.add(hoverCls)
-  }
-
-  const handleTreeNodeMouseLeave = function() {
-    el.classList.remove(hoverCls)
-  }
-
-  anchorEl.setAttribute('href', '#')
-
-  attachHandlers(
-    {
-      click: e => onClick(e, { data, isLeaf: Boolean(children) }),
-      mouseenter: handleTreeNodeMouseEnter,
-      mouseleave: handleTreeNodeMouseLeave,
-      mouseover: e => (children ? onNodeHover : onLeafHover)({ event: e, data })
-    },
-    anchorEl
+  const el = (
+    <li
+      class={classes({
+        active: children && isExpanded
+      })}
+    >
+      <TreeNodeContent>
+        {renderNode({
+          text,
+          nodeData,
+          isExpanded,
+          icon: iconAnchor,
+          isLeaf: !children
+        })}
+      </TreeNodeContent>
+      {isExpanded && children}
+    </li>
   )
-
-  el.appendChild(
-    renderNode({
-      data,
-      icon: iconAnchor,
-      isLeaf: !children,
-      isCollapsed: false,
-      el: onClick ? anchorEl : spanEl
-    })
-  )
-
-  if (children) {
-    el.classList.add('active')
-    el.appendChild(children)
-  }
 
   return el
 }

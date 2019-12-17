@@ -10,24 +10,46 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "hyperscript": "2.0.2"
+    "hyperscript": "2.0.2",
+    "preact": "^10.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-transform-runtime": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
-    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@aduh95/preact-fontawesome": "^0.1.5",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.6",
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-brands-svg-icons": "^5.12.0",
+    "@fortawesome/free-regular-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
     "@storybook/addon-actions": "^5.2.8",
     "@storybook/addon-docs": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addon-storysource": "^5.2.8",
+    "@storybook/components": "^5.2.8",
     "@storybook/html": "^5.2.8",
+    "@storybook/preact": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "@storybook/source-loader": "^5.2.8",
     "babel-loader": "^8.0.6",
+    "core-js": "^3.5.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-preact-pure": "^2.2.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "expect": "^24.9.0",
     "jsx-no-react": "^0.3.0",
+    "lodash.camelcase": "^4.3.0",
     "parcel-bundler": "^1.6.1",
+    "preact-compat": "^3.19.0",
+    "preact-svg-loader": "^0.2.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "storybook-addon-jsx": "^7.1.13",
-    "webpack": "^4.41.2"
+    "storybook-addon-specifications": "^2.1.5",
+    "webpack": "^4.41.3"
   },
   "keywords": []
 }

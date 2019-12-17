@@ -1,14 +1,6 @@
 {
   "presets": ["@babel/preset-env"],
-  "plugins": [
-    [
-      "@babel/plugin-transform-react-jsx",
-      {
-        "pragma": "jsxElem"
-      }
-    ],
-    "@babel/plugin-transform-runtime"
-  ],
+  "plugins": ["@babel/plugin-transform-runtime"],
   "parserOpts": {
     "plugins": ["dynamicImport"]
   }
