@@ -42,7 +42,7 @@
     "expect": "^24.9.0",
     "jsx-no-react": "^0.3.0",
     "lodash.camelcase": "^4.3.0",
-    "parcel-bundler": "^1.6.1",
+    "parcel-bundler": "^1.12.4",
     "preact-compat": "^3.19.0",
     "preact-svg-loader": "^0.2.1",
     "react": "^16.12.0",
